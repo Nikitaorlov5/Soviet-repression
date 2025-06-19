@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Карта репрессий в СССР</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0.5em 0 0.5em;
+    }
+
+    #map {
+      height: 87vh;
+      width: 95%;
+      margin: 0 auto;
+      border-radius: 0px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .legend {
+      position: absolute;
+      top: 2%;
+      left: 5%;
+      background: rgba(255, 255, 255, 0.6);
+      color: #000000;
+      padding: 12px 18px;
+      font-size: 18px;
+      border-radius: 0px;
+      line-height: 1.6;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      z-index: 1000;
+    }
+
+    .legend .item {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 6px;
+    }
+
+    .icon-gulag img,
+    .icon-event img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .gulagIcon-animated {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gulagIcon-animated:hover {
+      transform: scale(1.15) translateY(-5px);
+      z-index: 10;
+    }
+
+    .eventIcon-animated {
+      width: 80px;
+      height: 55px;
+      background-size: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .eventIcon-animated:hover {
+      transform: scale(1.15) translateY(-5px);
+      z-index: 10;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Карта репрессий в СССР</h1>
+  <div id="map">
+
+    <!-- 🗺️ Легенда -->
+    <div class="legend">
+        <div class="item"><div class="icon-gulag"><img src="images/gulag-logo.png"></div> ГУЛАГ</div>
+        <div class="item"><div class="icon-event"><img src="images/event-icon.png"></div> Основные этапы</div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+  const map = L.map('map').setView([60.5, 90], 3);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+
+const gulagIcon = new L.DivIcon({
+  className: '', // убрать дефолтный класс
+  html: '<div class="gulagIcon-animated" style="background-image: url(images/gulag-logo.png);"></div>',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40]
+});
+
+const eventIcon = new L.DivIcon({
+  className: '', // убрать дефолтный класс
+  html: '<div class="eventIcon-animated" style="background-image: url(images/event-icon.png);"></div>',
+  iconSize: [70, 55],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40]
+});
+
+  // 🟥 ГУЛАГ
+
+  // 🟥 ГУЛАГ
+
+L.marker([65.0, 36.6], { icon: gulagIcon }).addTo(map)
+  .bindPopup(`<b>Соловецкий лагерь (СЛОН)</b><br>
+  Первый крупный лагерь ГУЛАГа (1923–1939), основан в монастыре. Заключённые: священники, интеллигенция, политические. 
+  Здесь отрабатывались методы репрессий и изоляции.<br>
+  <i>Символ зарождения лагерной системы.</i><br>
+  <div style="display: flex; justify-content: space-between; gap: 4px; margin: 5px 0;">
+    <img src="images/panorama-solov.jpg" style="width: 50%; border-radius: 4px;"><br>
+    <img src="images/slon-bosses.jpg" style="width: 50%; border-radius: 4px;"><br>
+  </div>
+  <a href="https://ru.wikipedia.org/wiki/Соловецкий_лагерь_особого_назначения" target="_blank">Читать подробнее</a>`);
+
+L.marker([59.5, 150.8], { icon: gulagIcon }).addTo(map)
+  .bindPopup(`<b>Колыма (Севвостлаг)</b><br>
+  Один из самых страшных лагерей. Золото, холод, голод и массовая смертность. 
+  Символ насилия и эксплуатации в ГУЛАГе.<br>
+  <i>"Золотой ад".</i><br>
+  <img src="images/panorama-kolyma.png" width="100%" style="margin:5px 0;"><br>
+  <a href="https://ru.wikipedia.org/wiki/Севвостлаг" target="_blank">Читать подробнее</a>`);
+
+L.marker([61.6, 89.6], { icon: gulagIcon }).addTo(map)
+  .bindPopup(`<b>Норильлаг</b><br>
+  Строительство Норильска и комбината силами заключённых. Много политических, инженеров и учёных. 
+  Жестокие условия, холод, тяжелый труд.<br>
+  <i>Индустриализация через ГУЛАГ.</i><br>
+  <img src="images/noril-panorama.jpg" width="100%" style="margin:5px 0;"><br>
+  <a href="https://ru.wikipedia.org/wiki/Норильлаг" target="_blank">Читать подробнее</a>`);
+
+L.marker([53.9, 123.9], { icon: gulagIcon }).addTo(map)
+  .bindPopup(`<b>БАМлаг</b><br>
+  Лагерь для строительства Байкало-Амурской магистрали. Тайга, голод, нехватка снабжения. 
+  Заключённые умирали от болезней и изнурения.<br>
+  <i>Железная дорога на костях.</i><br>
+  <img src="images/bamlag.jpeg" width="100%" style="margin:5px 0;"><br>
+  <a href="https://ru.wikipedia.org/wiki/БАМлаг" target="_blank">Читать подробнее</a>`);
+
+// 🟦 Исторические этапы
+
+L.marker([55.75, 37.6], { icon: eventIcon }).addTo(map)
+  .bindPopup(`<b>1937–1938: Большой террор</b><br>
+  Массовые аресты, доносы, расстрелы. Репрессии затронули почти все слои населения. 
+  Более 1,5 млн арестованных, около 700 тыс. расстреляно.<br>
+  <i>Пик государственного террора.</i><br>
+  <img src="images/big-terror.jpg" width="100%" style="margin:5px 0;"><br>
+  <a href="https://ru.wikipedia.org/wiki/Большой_террор" target="_blank">Читать подробнее</a>`);
+
+L.marker([51.17, 71.43], { icon: eventIcon }).addTo(map)
+  .bindPopup(`<b>1930–1933: Раскулачивание</b><br>
+  Насильственное выселение и ссылки крестьян. Миллионы лишены имущества, многие умерли в пути или в ссылке. 
+  Сельское хозяйство разрушено.<br>
+  <i>Гибель деревни.</i><br>
+  <div style="display: flex; justify-content: space-between; gap: 4px; margin: 5px 0;">
+    <img src="images/dek-class.jpg" style="width: 50%; border-radius: 4px;"><br>
+    <img src="images/dek-train.jpg" style="width: 50%; border-radius: 4px;"><br>
+  </div>
+  <a href="https://ru.wikipedia.org/wiki/Раскулачивание" target="_blank">Читать подробнее</a>`);
+
+L.marker([43.3, 45.7], { icon: eventIcon }).addTo(map)
+  .bindPopup(`<b>1944: Депортация чеченцев и ингушей</b><br>
+  Насильственное переселение целых народов за "коллективную вину". 
+  В пути и в ссылке погибли десятки тысяч человек.<br>
+  <i>Этническая трагедия.</i><br>
+  <img src="images/deportation.jpg" width="100%" style="margin:5px 0;"><br>
+  <a href="https://ru.wikipedia.org/wiki/Депортация_чеченцев_и_ингушей" target="_blank">Читать подробнее</a>`);
+
+L.marker([59.9, 30.3], { icon: eventIcon }).addTo(map)
+  .bindPopup(`<b>1952–1953: Дело врачей</b><br>
+  Последняя волна репрессий при Сталине. Ложные обвинения врачей, в основном евреев, в заговоре. 
+  Прелюдия к возможным новым чисткам.<br>
+  <i>Государственный антисемитизм.</i><br>
+  <img src="images/doctor-case.jpg" width="100%" style="margin:5px 0;"><br>
+  <a href="https://ru.wikipedia.org/wiki/Дело_врачей" target="_blank">Читать подробнее</a>`);
+
+</script>
+
+</body>
+</html>
